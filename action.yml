@@ -184,7 +184,7 @@ runs:
       shell: bash
       run: |
         echo ::group::srtool info
-        CMD="docker run -i --rm -v ${{ env.WORKDIR }}:/build ${{ env.SRTOOL_IMAGE }} info -cM"
+        CMD="docker run -i --rm -u root -v ${{ env.WORKDIR }}:/build ${{ env.SRTOOL_IMAGE }} info -cM"
         JSON=`$CMD`
         echo $JSON | jq .
         echo "info=$JSON" >> $GITHUB_OUTPUT
@@ -198,7 +198,7 @@ runs:
         WASM_BUILD_STD: "0"
       run: |
         echo ::group::Srtool build of chain ${{ inputs.chain }}
-        CMD="docker run -i --rm -e PACKAGE=${{ env.PACKAGE }} -e RUNTIME_DIR=${{ env.RUNTIME_DIR }} -e BUILD_OPTS -e
+        CMD="docker run -i --rm -u root -e PACKAGE=${{ env.PACKAGE }} -e RUNTIME_DIR=${{ env.RUNTIME_DIR }} -e BUILD_OPTS -e
         PARACHAIN_PALLET_ID -e AUTHORIZE_UPGRADE_PREFIX -e PROFILE -e WASM_BUILD_STD -v ${{ env.WORKDIR }}:/build ${{ env.SRTOOL_IMAGE
         }} build --app --json -cM"
 
