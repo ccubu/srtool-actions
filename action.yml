@@ -174,7 +174,7 @@ runs:
       shell: bash
       run: |
         echo ::group::Srtool version
-        CMD="docker run -i --rm -v ${{ env.WORKDIR }}:/build ${{ env.SRTOOL_IMAGE }} version -cM"
+        CMD="docker run -i --rm -u root -v ${{ env.WORKDIR }}:/build ${{ env.SRTOOL_IMAGE }} version -cM"
         JSON=`$CMD`
         echo $JSON | jq .
         echo "version=$JSON" >> $GITHUB_OUTPUT
