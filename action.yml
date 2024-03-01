@@ -127,6 +127,7 @@ runs:
         echo "PACKAGE=$PACKAGE" >> $GITHUB_ENV
 
         echo "BUILD_OPTS=${{ env.BUILD_OPTS }}" >> $GITHUB_ENV
+        echo "UID_GID=${{ env.UID_GID }}" >> $GITHUB_ENV
 
         PROFILE=${{ inputs.profile }}
         echo "PROFILE=$PROFILE" >> $GITHUB_ENV
@@ -154,6 +155,7 @@ runs:
         echo ℹ️ workdir: ${{ env.WORKDIR }}
         echo ℹ️ runtime_dir: ${{ env.RUNTIME_DIR }}
         echo ℹ️ build_opts: ${{ env.BUILD_OPTS }}
+        echo ℹ️ uid_gid: ${{ env.UID_GID }}
         echo ℹ️ parachain_pallet_id: ${{ env.PARACHAIN_PALLET_ID }}
         echo ℹ️ profile: ${{ env.PROFILE }}
         echo ℹ️ authorize_upgrade_prefix: ${{ env.AUTHORIZE_UPGRADE_PREFIX }}
@@ -198,7 +200,7 @@ runs:
         WASM_BUILD_STD: "0"
       run: |
         echo ::group::Srtool build of chain ${{ inputs.chain }}
-        CMD="docker run -i --rm --user root -e PACKAGE=${{ env.PACKAGE }} -e RUNTIME_DIR=${{ env.RUNTIME_DIR }} -e BUILD_OPTS -e
+        CMD="docker run -i --rm --user ${{ env.UID_GID }} -e PACKAGE=${{ env.PACKAGE }} -e RUNTIME_DIR=${{ env.RUNTIME_DIR }} -e BUILD_OPTS -e
         PARACHAIN_PALLET_ID -e AUTHORIZE_UPGRADE_PREFIX -e PROFILE -e WASM_BUILD_STD -v ${{ env.WORKDIR }}:/build ${{ env.SRTOOL_IMAGE
         }} build --app --json -cM"
 
