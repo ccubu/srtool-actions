@@ -198,9 +198,9 @@ runs:
         WASM_BUILD_STD: "0"
       run: |
         echo ::group::Srtool build of chain ${{ inputs.chain }}
-        CMD="docker run -i --rm -e PACKAGE=${{ env.PACKAGE }} -e RUNTIME_DIR=${{ env.RUNTIME_DIR }} -e BUILD_OPTS -e
+        CMD="docker run -i --rm --user root -e PACKAGE=${{ env.PACKAGE }} -e RUNTIME_DIR=${{ env.RUNTIME_DIR }} -e BUILD_OPTS -e
         PARACHAIN_PALLET_ID -e AUTHORIZE_UPGRADE_PREFIX -e PROFILE -e WASM_BUILD_STD -v ${{ env.WORKDIR }}:/build ${{ env.SRTOOL_IMAGE
-        }} build --root --app --json -cM"
+        }} build --app --json -cM"
 
         echo ::debug::build::docker_run $CMD
         # here we keep streaming the progress and fetch the last line for the json result
